@@ -1089,6 +1089,8 @@ function removeScheduleItem(scheduleId) {
 function resetGachaScreen() {
     document.getElementById('gachaScreenContent').innerHTML = `<div class="gacha-placeholder">❓</div>`;
     document.getElementById('gachaResultCard').style.display = 'none';
+    const iframe = document.getElementById('gachaYoutubeIframe');
+    if (iframe) iframe.src = "";
     document.getElementById('gachaLever').classList.remove('pulled');
 }
 
@@ -1151,17 +1153,18 @@ function triggerGachaSpin() {
             <div style="font-style: italic; font-size: 11px; color: var(--text-light); margin-top: 6px; padding-left: 8px; border-left: 2px solid var(--border-color);">${reviewText}</div>
         `;
         
-        const resultImg = document.getElementById('gachaResultImg');
-        if (resultImg) {
-            resultImg.src = getYouTubeThumbnail(chosenRecipe.videoId);
-            resultImg.onerror = () => {
-                resultImg.onerror = null;
-                resultImg.src = `https://img.youtube.com/vi/${chosenRecipe.videoId}/hqdefault.jpg`;
-            };
+        const iframe = document.getElementById('gachaYoutubeIframe');
+        if (iframe) {
+            iframe.src = `https://www.youtube.com/embed/${chosenRecipe.videoId}`;
         }
         
         const resultCard = document.getElementById('gachaResultCard');
         resultCard.style.display = 'block';
+
+        // Auto scroll down smoothly to result card (matching production!)
+        setTimeout(() => {
+            resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
 
         // Setup actions listeners
         const openVideoBtn = document.getElementById('gachaOpenVideoBtn');
