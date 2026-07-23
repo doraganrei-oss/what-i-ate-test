@@ -1170,21 +1170,6 @@ function triggerGachaSpin() {
             resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 100);
 
-        // Setup actions listeners
-        const openVideoBtn = document.getElementById('gachaOpenVideoBtn');
-        const newOpenVideoBtn = openVideoBtn.cloneNode(true);
-        openVideoBtn.parentNode.replaceChild(newOpenVideoBtn, openVideoBtn);
-        newOpenVideoBtn.addEventListener('click', () => {
-            openVideoDetailModal(chosenRecipe.id);
-        });
-
-        const addToCalendarBtn = document.getElementById('gachaAddToCalendarBtn');
-        const newAddToCalendarBtn = addToCalendarBtn.cloneNode(true);
-        addToCalendarBtn.parentNode.replaceChild(newAddToCalendarBtn, addToCalendarBtn);
-        newAddToCalendarBtn.addEventListener('click', () => {
-            openCalendarDateSelectModal(chosenRecipe.id);
-        });
-
         // Reset lever styling state
         lever.classList.remove('pulled');
     }, 1400);
