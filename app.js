@@ -8,12 +8,12 @@ let isGuestMode = false;
 
 // Firebase configuration (using existing credentials or fallback to guest local-only)
 const firebaseConfig = {
-    apiKey: "AIzaSyAs-someMockApiKeyForTestingLocal-12345", // Will be replaced by real config if initialized online
-    authDomain: "what-i-ate-d81b3.firebaseapp.com",
-    projectId: "what-i-ate-d81b3",
-    storageBucket: "what-i-ate-d81b3.appspot.com",
-    messagingSenderId: "367355209355",
-    appId: "1:367355209355:web:ce007a8ff535c5c165ee2e",
+    apiKey: "AIzaSyC8bfzol0oGji86823dr8h2r4CIQjfbR0U",
+    authDomain: "whatiate-7d5ba.firebaseapp.com",
+    projectId: "whatiate-7d5ba",
+    storageBucket: "whatiate-7d5ba.firebasestorage.app",
+    messagingSenderId: "465598882926",
+    appId: "1:465598882926:web:95c9343182a457178bf27f",
     measurementId: "G-2V65GWTWRE"
 };
 
