@@ -1,0 +1,1446 @@
+/* ==========================================================================
+   Design System Variables & Core Styles
+   ========================================================================== */
+:root {
+    --primary-color: #FF6B4A;      /* Warm Accent Orange */
+    --primary-hover: #E05333;
+    --secondary-color: #FFC045;    /* Accent Yellow */
+    --accent-color: #FF8F6B;
+    
+    --bg-app: #FAF8F5;             /* Soft Warm Cream Page Background */
+    --bg-card: #FFFFFF;
+    --bg-header: #FFFFFF;
+    
+    --text-main: #2D2724;          /* Soft Deep Charcoal */
+    --text-muted: #7A726E;
+    --text-light: #A09691;
+    
+    --border-color: #EFEBE9;
+    --shadow-soft: 0 8px 24px rgba(220, 212, 208, 0.25);
+    --shadow-hover: 0 12px 32px rgba(180, 160, 150, 0.3);
+    
+    --font-outfit: 'Outfit', 'Noto Sans JP', sans-serif;
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-outfit);
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+}
+
+/* ==========================================================================
+   Main Layout & App Container
+   ========================================================================== */
+.app-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--bg-app);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 80px; /* Space for mobile nav bar */
+}
+
+.app-header {
+    background-color: var(--bg-header);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.015);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-emoji {
+    font-size: 28px;
+    animation: cook-rotate 4s infinite linear;
+    display: inline-block;
+}
+
+@keyframes cook-rotate {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(15deg) scale(1.08); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+.logo-text h1 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+.logo-text p {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* User profile header widget */
+.user-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 50px;
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.user-profile-header:hover {
+    background-color: #EFEBE9;
+}
+
+.user-header-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-header-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.header-login-btn {
+    background-color: var(--text-main);
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.header-login-btn:hover {
+    opacity: 0.9;
+}
+
+/* Desktop App Navigation */
+.app-nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 10px;
+}
+
+.nav-tab {
+    background: none;
+    border: none;
+    padding: 14px 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.nav-tab:hover {
+    color: var(--text-main);
+}
+
+.nav-tab.active {
+    color: var(--primary-color);
+}
+
+.nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20%;
+    right: 20%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px 3px 0 0;
+}
+
+.app-content {
+    flex: 1;
+    padding: 16px;
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* ==========================================================================
+   Mobile Bottom Navigation
+   ========================================================================== */
+.bottom-nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-color);
+    display: none; /* Desktop hidden, mobile flex */
+    justify-content: space-around;
+    align-items: center;
+    z-index: 10000;
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+    flex: 1;
+    height: 100%;
+    gap: 2px;
+    transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.bottom-nav-item:active {
+    transform: scale(0.95);
+}
+
+.bottom-nav-item.active {
+    color: var(--primary-color);
+}
+
+.bottom-nav-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Center Upload/Post Circle Button */
+.bottom-nav-item.upload-trigger-btn {
+    position: relative;
+    top: -10px;
+    height: 48px;
+    max-width: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), #ff451a);
+    box-shadow: 0 4px 14px rgba(255, 107, 74, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff !important;
+    flex: none;
+}
+
+.bottom-nav-icon-plus {
+    font-size: 22px;
+    color: #ffffff;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Filter Dashboard (Collapsible Dropdowns)
+   ========================================================================== */
+.timeline-header-panel {
+    background-color: var(--bg-card);
+    padding: 16px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.timeline-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.timeline-title-row h2 {
+    font-size: 16px;
+    font-weight: 850;
+    color: var(--text-main);
+}
+
+.view-toggle-btn {
+    color: var(--text-light);
+    background: none;
+    border: none;
+    padding: 6px 10px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-toggle-btn:hover {
+    background-color: #FAF8F5;
+    color: var(--text-main);
+}
+
+.view-toggle-btn.active {
+    color: var(--primary-color);
+    background-color: #FFF0EC;
+}
+
+/* Smooth slide collapse panel */
+.timeline-filter-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 500px;
+    opacity: 1;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, margin 0.3s ease, padding 0.3s ease;
+}
+
+.timeline-filter-dashboard.collapsed {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    pointer-events: none;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none; /* Hide scrollbar for clean UI */
+}
+
+.filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-btn {
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: #EFEBE9;
+    color: var(--text-main);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.timeline-filter-selects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.select-wrapper label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.select-wrapper select {
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 6px 8px;
+    font-size: 11px;
+    color: var(--text-main);
+    font-weight: 700;
+    outline: none;
+    cursor: pointer;
+}
+
+.select-wrapper select:focus {
+    border-color: var(--accent-color);
+}
+
+/* ==========================================================================
+   Instagram-style Feed Cards
+   ========================================================================== */
+.feed-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.post-card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-header {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.post-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.post-avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+}
+
+.post-username {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.post-time {
+    font-size: 10px;
+    color: var(--text-light);
+}
+
+.post-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-menu-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 13px;
+    transition: color 0.2s;
+}
+
+.post-menu-btn:hover {
+    color: var(--text-main);
+}
+
+/* Square 1:1 image container with play button preview */
+.post-img-container {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #FAF8F5;
+    cursor: pointer;
+    position: relative;
+}
+
+.post-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.post-card:hover .post-img {
+    transform: scale(1.02);
+}
+
+/* Play button overlay icon */
+.play-btn-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    opacity: 0.85;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.post-img-container:hover .play-btn-overlay {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+    background-color: #ffffff;
+}
+
+.post-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-interactive-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.like-action-btn {
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 50px;
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.like-action-btn:hover {
+    color: var(--primary-color);
+    border-color: #FF8F6B;
+    background-color: #FFF0EC;
+}
+
+.like-action-btn.liked {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.post-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 10px;
+}
+
+.post-tag-badge {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 50px;
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+.post-tag-badge.style { border-color: #D1C4E9; color: #5E35B1; background-color: #EDE7F6; }
+.post-tag-badge.genre { border-color: #BBDEFB; color: #1E88E5; background-color: #E3F2FD; }
+.post-tag-badge.taste { border-color: #FFE082; color: #F57F17; background-color: #FFF8E1; }
+.post-tag-badge.ingredient { border-color: #C8E6C9; color: #2E7D32; background-color: #E8F5E9; }
+
+.post-comment {
+    font-size: 12px;
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.post-comment .caption-user {
+    font-weight: 800;
+    margin-right: 6px;
+}
+
+.post-video-title {
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--text-main);
+    margin-bottom: 2px;
+    line-height: 1.4;
+}
+
+.post-channel-name {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Empty State Styling */
+.feed-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.empty-state-emoji {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.feed-empty-state h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.feed-empty-state p {
+    font-size: 12px;
+    color: var(--text-muted);
+    max-width: 300px;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   Instagram-style Profile Grid View
+   ========================================================================== */
+.posts-grid-view {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    width: 100%;
+}
+
+.grid-post-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #FAF8F5;
+    cursor: pointer;
+}
+
+.grid-post-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: filter 0.2s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grid-post-item:hover .grid-post-img {
+    filter: brightness(0.85);
+    transform: scale(1.03);
+}
+
+.grid-post-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.grid-post-item:hover .grid-post-overlay {
+    opacity: 1;
+}
+
+.grid-overlay-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.grid-video-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Modal Dialogs & Overlays
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: none; /* Controlled by JS active class */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 12000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    width: 100%;
+    max-width: 500px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    animation: zoomInGently 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoomInGently {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+    background-color: #ffffff;
+}
+
+/* YouTube Player Modal Styling */
+.youtube-player-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000000;
+}
+
+.youtube-player-wrapper.shorts-mode {
+    aspect-ratio: 9 / 16;
+    max-height: 60vh;
+}
+
+.youtube-player-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.detail-modal-body {
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.detail-modal-meta {
+    margin-top: 10px;
+}
+
+/* Form Styles */
+.form-title {
+    font-size: 16px;
+    font-weight: 850;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-body {
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: #FAF8F5;
+    outline: none;
+    font-size: 12px;
+    color: var(--text-main);
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.form-footer-actions {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background-color: #FAF8F5;
+}
+
+.btn-base {
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+}
+
+.btn-base:hover {
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: #EFEBE9;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Meal Calendar System
+   ========================================================================== */
+.calendar-container {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.calendar-header h2 {
+    font-size: 15px;
+    font-weight: 850;
+    color: var(--text-main);
+}
+
+.cal-nav-btn {
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.cal-nav-btn:hover {
+    background-color: #EFEBE9;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.weekday {
+    text-align: center;
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+    padding: 4px 0;
+}
+
+.calendar-days {
+    display: contents;
+}
+
+.calendar-day {
+    aspect-ratio: 1 / 1;
+    background-color: #FAF8F5;
+    border-radius: var(--radius-sm);
+    position: relative;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s;
+    overflow: hidden;
+}
+
+.calendar-day:hover {
+    background-color: #EFEBE9;
+    border-color: var(--border-color);
+}
+
+.day-number {
+    font-size: 10px;
+    font-weight: 750;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+.calendar-day.today {
+    background-color: #FFF0EC;
+    border-color: #FFD4C9;
+}
+
+.calendar-day.today .day-number {
+    color: var(--primary-color);
+}
+
+.calendar-day.empty {
+    background-color: transparent;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Compact meal thumbnail inside calendar day cell */
+.day-meal-thumbnail {
+    width: 100%;
+    height: calc(100% - 12px);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 2px;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.day-meal-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Meal indicator count badge if multiple */
+.day-meal-count-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-size: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+/* Day meals schedule popover modal styling */
+.schedule-popover-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.schedule-popover-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #FAF8F5;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.schedule-popover-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.schedule-popover-info {
+    flex: 1;
+    overflow: hidden;
+}
+
+.schedule-popover-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.schedule-popover-channel {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+.schedule-remove-btn {
+    background: none;
+    border: none;
+    color: #FF5E5E;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px;
+}
+
+/* ==========================================================================
+   YouTube Recipe Gacha Screen
+   ========================================================================== */
+.gacha-container {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-color);
+    padding: 24px 16px;
+    text-align: center;
+}
+
+.gacha-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: -6px;
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.gacha-machine-wrapper {
+    position: relative;
+    max-width: 240px;
+    margin: 0 auto 20px auto;
+}
+
+.gacha-machine {
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    background-color: #FFEAE4;
+    border: 8px solid var(--text-main);
+    border-radius: 40px 40px 16px 16px;
+    position: relative;
+    box-shadow: inset 0 -12px 0 rgba(0,0,0,0.05);
+}
+
+.gacha-screen {
+    width: 80%;
+    height: 48%;
+    background-color: #ffffff;
+    border: 4px solid var(--text-main);
+    border-radius: 20px;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gacha-screen-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.gacha-placeholder {
+    font-size: 40px;
+    animation: bounce-slow 1.6s infinite alternate;
+}
+
+@keyframes bounce-slow {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+.gacha-handle-area {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+}
+
+.gacha-lever {
+    width: 100%;
+    height: 100%;
+    background-color: var(--text-muted);
+    border: 4px solid var(--text-main);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+}
+
+.gacha-lever::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    background-color: var(--text-main);
+    border-radius: 50%;
+}
+
+.gacha-lever.pulled {
+    transform: rotate(180deg);
+}
+
+/* Rolling visual animation inside screen */
+.rolling {
+    display: flex;
+    flex-direction: column;
+    animation: roll 0.15s infinite linear;
+}
+
+@keyframes roll {
+    0% { transform: translateY(-40px); }
+    100% { transform: translateY(40px); }
+}
+
+.gacha-result-card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    padding: 16px;
+    margin-top: 20px;
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: none;
+    text-align: left;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.result-badge {
+    display: inline-block;
+    background-color: #E8F5E9;
+    border: 1px solid #A5D6A7;
+    color: #2E7D32;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 50px;
+    margin-bottom: 8px;
+}
+
+.gacha-result-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.gacha-result-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.gacha-action-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    transition: opacity 0.2s;
+}
+
+.gacha-action-btn:hover {
+    opacity: 0.9;
+}
+
+.gacha-action-btn.primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.gacha-action-btn.secondary {
+    background-color: #FAF8F5;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Recipe Manager Accordion (Gacha settings)
+   ========================================================================== */
+.gacha-manager-accordion {
+    margin-top: 20px;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.accordion-header {
+    background-color: #FAF8F5;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 850;
+    color: var(--text-main);
+    user-select: none;
+}
+
+.accordion-icon {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+}
+
+.gacha-manager-accordion.open .accordion-icon {
+    transform: rotate(90deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-out;
+    background-color: #ffffff;
+}
+
+.gacha-manager-accordion.open .accordion-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.custom-recipes-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-recipe-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-recipe-item:last-child {
+    border-bottom: none;
+}
+
+.custom-recipe-info {
+    flex: 1;
+    overflow: hidden;
+    margin-right: 12px;
+}
+
+.custom-recipe-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.custom-recipe-creator {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+.custom-recipe-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.delete-recipe-btn {
+    background-color: transparent;
+    border: none;
+    color: #FF5E5E;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.delete-recipe-btn:hover {
+    background-color: #FFF0EC;
+}
+
+.custom-recipe-empty {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-light);
+    padding: 16px;
+}
+
+/* ==========================================================================
+   Responsive Rules
+   ========================================================================== */
+@media (max-width: 768px) {
+    .app-nav {
+        display: none !important; /* Hide top nav on mobile */
+    }
+    
+    .bottom-nav-bar {
+        display: flex !important; /* Show bottom nav bar on mobile */
+    }
+    
+    .app-container {
+        padding-bottom: 74px !important;
+    }
+    
+    /* Make feed cards edge-to-edge on mobile for Instagram look */
+    .post-card {
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        margin-left: -16px !important; /* Counteract .app-content padding */
+        margin-right: -16px !important;
+        box-shadow: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+    }
+    
+    .timeline-header-panel {
+        border-radius: var(--radius-md) !important;
+    }
+
+    .calendar-container, .gacha-container {
+        border-radius: var(--radius-md) !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .bottom-nav-bar {
+        display: none !important;
+    }
+}

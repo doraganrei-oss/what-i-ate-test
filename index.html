@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>きょう何食べた？ | 料理動画キュレーション ＆ 献立ガチャ</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css?v=3.50">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2V65GWTWRE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2V65GWTWRE');
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="logo-emoji">🍳</span>
+                <div class="logo-text">
+                    <h1>きょう何食べた？</h1>
+                    <p>レシピ動画キュレーション ＆ ガチャ</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <!-- Login widget (dynamic) -->
+                <button class="header-login-btn" id="headerLoginBtn">ログイン</button>
+                <div class="user-profile-header" id="userProfileHeader" style="display: none;">
+                    <img src="https://via.placeholder.com/150" alt="Avatar" class="user-header-avatar" id="userHeaderAvatar">
+                    <span class="user-header-name" id="userHeaderName">o</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Desktop App Navigation (Hidden on mobile) -->
+        <nav class="app-nav">
+            <button class="nav-tab active" data-tab="timeline">
+                <span class="nav-icon">🕒</span>
+                <span class="nav-label">フィード</span>
+            </button>
+            <button class="nav-tab" data-tab="calendar">
+                <span class="nav-icon">📅</span>
+                <span class="nav-label">カレンダー</span>
+            </button>
+            <button class="nav-tab" data-tab="likes">
+                <span class="nav-icon">💛</span>
+                <span class="nav-label">お気に入り</span>
+            </button>
+            <button class="nav-tab" data-tab="gacha">
+                <span class="nav-icon">🎰</span>
+                <span class="nav-label">献立ガチャ</span>
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="app-content">
+            <!-- Timeline Section -->
+            <section id="tab-timeline" class="tab-panel active">
+                <div class="timeline-header-panel">
+                    <div class="timeline-title-row">
+                        <h2>おすすめレシピ動画 🍽️</h2>
+                        <div class="view-toggle-buttons">
+                            <button class="view-toggle-btn" id="timelineFilterToggleBtn" title="フィルター展開" style="font-size: 11px; font-weight: 800; padding: 6px 10px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 4px; border: 1px solid var(--border-color); margin-right: 6px;">🔍 フィルター</button>
+                            <button class="view-toggle-btn active" id="timelineListViewBtn" title="フィード表示">☰</button>
+                            <button class="view-toggle-btn" id="timelineGridViewBtn" title="グリッド表示">田</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Collapsible Filter Dashboard -->
+                    <div class="timeline-filter-dashboard collapsed" id="timelineFilterDashboard">
+                        <div class="filter-bar" id="timelineMealTypeFilters">
+                            <button class="filter-btn active" data-filter="all">すべて</button>
+                            <button class="filter-btn" data-filter="morning">朝食</button>
+                            <button class="filter-btn" data-filter="lunch">昼食</button>
+                            <button class="filter-btn" data-filter="dinner">夕食</button>
+                            <button class="filter-btn" data-filter="snack">おやつ</button>
+                        </div>
+                        
+                        <div class="timeline-filter-selects-grid">
+                            <div class="select-wrapper">
+                                <label for="filterStyle">スタイル</label>
+                                <select id="filterStyle">
+                                    <option value="all">すべて</option>
+                                    <option value="自炊">自炊</option>
+                                    <option value="外食">外食</option>
+                                    <option value="テイクアウト">中食</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <label for="filterGenre">ジャンル</label>
+                                <select id="filterGenre">
+                                    <option value="all">すべて</option>
+                                    <option value="和風">和風</option>
+                                    <option value="洋風">洋風</option>
+                                    <option value="中華">中華</option>
+                                    <option value="アジア">韓国・アジア</option>
+                                    <option value="イタリアン">イタリアン</option>
+                                    <option value="エスニック">エスニック</option>
+                                    <option value="その他">その他</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <label for="filterTaste">味の傾向</label>
+                                <select id="filterTaste">
+                                    <option value="all">すべて</option>
+                                    <option value="あっさり">あっさり</option>
+                                    <option value="さっぱり">さっぱり</option>
+                                    <option value="しっかり">こってり・濃いめ</option>
+                                    <option value="辛口">辛口・スパイシー</option>
+                                    <option value="甘口">甘口・マイルド</option>
+                                    <option value="その他">その他</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <label for="filterIngredient">主な食材</label>
+                                <select id="filterIngredient">
+                                    <option value="all">すべて</option>
+                                    <option value="肉類">肉類</option>
+                                    <option value="魚介類">魚介類</option>
+                                    <option value="野菜類">野菜・大豆</option>
+                                    <option value="麺類">麺類</option>
+                                    <option value="ご飯物">ご飯物</option>
+                                    <option value="パン類">パン・粉物</option>
+                                    <option value="その他">その他</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <label for="filterFocus">こだわり</label>
+                                <select id="filterFocus">
+                                    <option value="all">すべて</option>
+                                    <option value="時短">時短・簡単</option>
+                                    <option value="節約">節約・ヘルシー</option>
+                                    <option value="ごちそう">特別・こだわり</option>
+                                    <option value="その他">その他</option>
+                                </select>
+                            </div>
+                            <div class="select-wrapper">
+                                <label for="filterSort">並び替え</label>
+                                <select id="filterSort">
+                                    <option value="newest">新しい順</option>
+                                    <option value="likes">美味しそう！順</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed Output Area -->
+                <div class="feed-container" id="timelineFeed">
+                    <!-- Dynamically populated card feed -->
+                </div>
+
+                <!-- Grid Album Output Area (Hidden by default) -->
+                <div class="posts-grid-view" id="timelineGrid" style="display: none;">
+                    <!-- Dynamically populated 3-column album grid -->
+                </div>
+            </section>
+
+            <!-- Calendar Section -->
+            <section id="tab-calendar" class="tab-panel">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="cal-nav-btn" id="prevMonthBtn">◀</button>
+                        <h2 id="calendarMonthTitle">2026年 7月</h2>
+                        <button class="cal-nav-btn" id="nextMonthBtn">▶</button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="weekday">日</div>
+                        <div class="weekday">月</div>
+                        <div class="weekday">火</div>
+                        <div class="weekday">水</div>
+                        <div class="weekday">木</div>
+                        <div class="weekday">金</div>
+                        <div class="weekday">土</div>
+                        <div class="calendar-days" id="calendarDays">
+                            <!-- Filled dynamically by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Likes Section -->
+            <section id="tab-likes" class="tab-panel">
+                <div class="timeline-header-panel">
+                    <div class="timeline-title-row">
+                        <h2 style="margin:0;">お気に入りレシピ動画 💛</h2>
+                        <div class="view-toggle-buttons">
+                            <button class="view-toggle-btn active" id="likesListViewBtn" title="フィード表示">☰</button>
+                            <button class="view-toggle-btn" id="likesGridViewBtn" title="グリッド表示">田</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Likes Feed Container -->
+                <div class="feed-container" id="likesFeed">
+                    <!-- Loaded dynamically -->
+                </div>
+                <!-- Likes Grid Container -->
+                <div class="posts-grid-view" id="likesGrid" style="display: none;">
+                    <!-- Loaded dynamically -->
+                </div>
+            </section>
+
+            <!-- Gacha Section -->
+            <section id="tab-gacha" class="tab-panel">
+                <div class="gacha-container">
+                    <h2 style="font-weight: 850; margin-bottom: 4px;">献立ガチャ 🎰</h2>
+                    <p class="gacha-subtitle">今日の献立が決まらない？レバーを回してみよう！</p>
+                    
+                    <div class="gacha-machine-wrapper">
+                        <div class="gacha-machine">
+                            <div class="gacha-screen">
+                                <div class="gacha-screen-content" id="gachaScreenContent">
+                                    <div class="gacha-placeholder">❓</div>
+                                </div>
+                            </div>
+                            <div class="gacha-handle-area">
+                                <div class="gacha-lever" id="gachaLever"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gacha Result Card -->
+                    <div class="gacha-result-card" id="gachaResultCard">
+                        <div class="result-badge">本日の献立 🎯</div>
+                        <h3 class="post-video-title" id="gachaResultTitle">豚の生姜焼き</h3>
+                        <p class="gacha-result-desc" id="gachaResultDesc">リュウジのバズレシピ</p>
+                        <div class="gacha-result-actions">
+                            <button class="gacha-action-btn primary" id="gachaOpenVideoBtn">作り方を見る 🎬</button>
+                            <button class="gacha-action-btn secondary" id="gachaAddToCalendarBtn">カレンダーに登録 📅</button>
+                        </div>
+                    </div>
+
+                    <!-- Recipe list manager accordion -->
+                    <div class="gacha-manager-accordion" id="gachaManagerAccordion">
+                        <div class="accordion-header" id="accordionHeader">
+                            <span>登録済みレシピ動画一覧 (<span id="registeredCount">0</span>)</span>
+                            <span class="accordion-icon">▶</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="custom-recipes-list" id="customRecipesList">
+                                <!-- Dynamically loaded registered list -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Bottom Navigation Bar (Hidden on desktop) -->
+        <nav class="bottom-nav-bar">
+            <button class="bottom-nav-item active" data-tab="timeline">
+                <span class="bottom-nav-icon">🕒</span>
+                <span class="bottom-nav-label">フィード</span>
+            </button>
+            <button class="bottom-nav-item" data-tab="calendar">
+                <span class="bottom-nav-icon">📅</span>
+                <span class="bottom-nav-label">カレンダー</span>
+            </button>
+            <button class="bottom-nav-item upload-trigger-btn" id="bottomNavUploadBtn">
+                <span class="bottom-nav-icon-plus">➕</span>
+            </button>
+            <button class="bottom-nav-item" data-tab="likes">
+                <span class="bottom-nav-icon">💛</span>
+                <span class="bottom-nav-label">お気に入り</span>
+            </button>
+            <button class="bottom-nav-item" data-tab="gacha">
+                <span class="bottom-nav-icon">🎰</span>
+                <span class="bottom-nav-label">ガチャ</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- ==========================================================================
+       Modals & Overlays
+       ========================================================================== -->
+
+    <!-- Add Recipe Video Modal Form -->
+    <div class="modal-overlay" id="addMealModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeAddMealBtn">&times;</button>
+            <h3 class="form-title">おすすめレシピ動画を登録 🎬</h3>
+            <form id="addMealForm">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label for="recipeUrl">YouTube動画のURL または 動画ID *</label>
+                        <input type="text" id="recipeUrl" placeholder="例: https://www.youtube.com/watch?v=XXXXXX または Shorts動画のリンク" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeTitle">料理名 (タイトル) *</label>
+                        <input type="text" id="recipeTitle" placeholder="例: 極上の肉じゃが" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeChannel">YouTubeチャンネル名 (紹介者など) *</label>
+                        <input type="text" id="recipeChannel" placeholder="例: 料理研究家リュウジのバズレシピ" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recipeStyle">スタイル</label>
+                            <select id="recipeStyle">
+                                <option value="自炊">自炊 (料理を作る)</option>
+                                <option value="外食">外食</option>
+                                <option value="テイクアウト">中食 (お弁当・デリ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipeMealTime">時間帯</label>
+                            <select id="recipeMealTime">
+                                <option value="dinner">夕食</option>
+                                <option value="lunch">昼食</option>
+                                <option value="morning">朝食</option>
+                                <option value="snack">おやつ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recipeGenre">ジャンル</label>
+                            <select id="recipeGenre">
+                                <option value="和風">和風</option>
+                                <option value="洋風">洋風</option>
+                                <option value="中華">中華</option>
+                                <option value="アジア">韓国・アジア</option>
+                                <option value="イタリアン">イタリアン</option>
+                                <option value="エスニック">エスニック</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipeTaste">味の傾向</label>
+                            <select id="recipeTaste">
+                                <option value="あっさり">あっさり</option>
+                                <option value="さっぱり">さっぱり</option>
+                                <option value="しっかり">こってり・濃いめ</option>
+                                <option value="辛口">辛口・スパイシー</option>
+                                <option value="甘口">甘口・マイルド</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="recipeIngredient">主な食材</label>
+                            <select id="recipeIngredient">
+                                <option value="肉類">肉類</option>
+                                <option value="魚介類">魚介類</option>
+                                <option value="野菜類">野菜・大豆</option>
+                                <option value="麺類">麺類</option>
+                                <option value="ご飯物">ご飯物</option>
+                                <option value="パン類">パン・粉物</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipeFocus">こだわり</label>
+                            <select id="recipeFocus">
+                                <option value="時短">時短・簡単</option>
+                                <option value="節約">節約・ヘルシー</option>
+                                <option value="ごちそう">ごちそう・特別</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipeReview">おすすめレビュー・メモ</label>
+                        <textarea id="recipeReview" rows="3" placeholder="「10分でサッと作れて最高でした！」「ニンニク多めがおすすめ」など"></textarea>
+                    </div>
+                </div>
+                <div class="form-footer-actions">
+                    <button type="button" class="btn-base btn-secondary" id="cancelAddMealBtn">キャンセル</button>
+                    <button type="submit" class="btn-base btn-primary" id="saveMealBtn">登録する</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- YouTube Embedded Player + Details Modal -->
+    <div class="modal-overlay" id="youtubePlayerModal">
+        <div class="modal-content" style="max-width: 550px;">
+            <button class="close-btn" id="closeYoutubePlayerBtn">&times;</button>
+            <div class="youtube-player-wrapper" id="youtubeIframeContainer">
+                <!-- Dynamic Iframe Embedded Player -->
+            </div>
+            <div class="detail-modal-body">
+                <h3 class="post-video-title" id="detailVideoTitle">極上の肉じゃが</h3>
+                <p class="post-channel-name" id="detailChannelName">料理研究家リュウジのバズレシピ</p>
+                
+                <div class="post-tags-container" id="detailTagsContainer">
+                    <!-- Badges -->
+                </div>
+
+                <div class="post-interactive-row" style="margin-top: 14px; margin-bottom: 14px;">
+                    <button class="like-action-btn" id="detailLikeBtn">
+                        <span class="like-icon">🤤</span> 美味しそう！ (<span id="detailLikeCount">0</span>)
+                    </button>
+                    <button class="btn-base btn-primary" id="detailScheduleBtn" style="font-size: 11px; padding: 6px 14px;">📅 カレンダーに追加</button>
+                </div>
+
+                <div class="post-comment" style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                    <span class="caption-user" id="detailUserName">o</span>
+                    <span id="detailUserReview">レビューコメントがここに入ります。</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Event Selection Popover Modal -->
+    <div class="modal-overlay" id="schedulePopoverModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="close-btn" id="closeSchedulePopoverBtn">&times;</button>
+            <h3 class="form-title" id="schedulePopoverTitle">2026年7月23日の予定</h3>
+            <div class="detail-modal-body">
+                <div class="schedule-popover-list" id="schedulePopoverList">
+                    <!-- Populated dynamic items scheduled for this day -->
+                </div>
+                <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+                    <button class="btn-base btn-secondary" id="closeSchedulePopoverDoneBtn">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Target Date Selection Modal -->
+    <div class="modal-overlay" id="calendarDateSelectModal">
+        <div class="modal-content" style="max-width: 360px;">
+            <button class="close-btn" id="closeDateSelectModalBtn">&times;</button>
+            <h3 class="form-title">予定をカレンダーに登録</h3>
+            <div class="form-body">
+                <div class="form-group">
+                    <label for="calendarTargetDate">登録する日を選択してください</label>
+                    <input type="date" id="calendarTargetDate" required style="padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 13px;">
+                </div>
+            </div>
+            <div class="form-footer-actions">
+                <button class="btn-base btn-secondary" id="cancelDateSelectBtn">キャンセル</button>
+                <button class="btn-base btn-primary" id="confirmDateSelectBtn">カレンダーに追加する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Auth / Login Overlay -->
+    <div class="modal-overlay" id="loginOverlay">
+        <div class="modal-content" style="max-width: 360px; padding: 24px; text-align: center; gap: 12px;">
+            <span style="font-size: 48px;">🔒</span>
+            <h2 style="font-weight: 850;">ログイン</h2>
+            <p style="font-size: 11px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">レシピ動画を保存したり、カレンダーを使用するにはアカウントへのログインが必要です。</p>
+            <button class="btn-base btn-primary" id="googleLoginBtn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px;">Googleでサインイン 🚀</button>
+            <button class="btn-base btn-secondary" id="guestLoginBtn" style="width: 100%; padding: 12px;">ログインせずに使う（お試し保存）</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Compat Mode) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <!-- Application Script -->
+    <script src="app.js?v=3.50"></script>
+</body>
+</html>
