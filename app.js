@@ -435,6 +435,10 @@ function initEventListeners() {
     if (gachaLever) {
         gachaLever.addEventListener('click', triggerGachaSpin);
     }
+    const gachaRetryBtn = document.getElementById('gachaRetryBtn');
+    if (gachaRetryBtn) {
+        gachaRetryBtn.addEventListener('click', triggerGachaSpin);
+    }
 
     // Accordion expand logic
     const accordionHeader = document.getElementById('accordionHeader');
