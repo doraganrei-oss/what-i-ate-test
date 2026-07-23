@@ -1132,19 +1132,24 @@ function triggerGachaSpin() {
 
     // Stop roll after 1.4s
     setTimeout(() => {
-        // Display capsule ball or final result thumbnail inside Gacha screen
+        // Display circular capsule ball inside Gacha screen (just like the previous version!)
         screen.innerHTML = `
-            <div style="width: 100%; height: 100%; border-radius: 12px; overflow: hidden; position: relative;">
-                <img src="${getYouTubeThumbnail(chosenRecipe.videoId)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${chosenRecipe.videoId}/hqdefault.jpg';">
-                <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #ffffff; font-size: 9px; font-weight: 800; padding: 4px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                    ${chosenRecipe.dishName}
-                </div>
-            </div>
+            <img src="${getYouTubeThumbnail(chosenRecipe.videoId)}" alt="${chosenRecipe.dishName}" 
+                 style="width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 3px solid #FFC045; box-shadow: 0 4px 10px rgba(0,0,0,0.3); animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);" 
+                 onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${chosenRecipe.videoId}/hqdefault.jpg';">
         `;
         
         // Pop result card details
         document.getElementById('gachaResultTitle').innerText = chosenRecipe.dishName;
-        document.getElementById('gachaResultDesc').innerText = chosenRecipe.channelName;
+        
+        let creatorText = `「${chosenRecipe.createdByName || 'ゲスト'}」の登録レシピ！`;
+        let reviewText = chosenRecipe.review ? `「${chosenRecipe.review}」` : '（紹介メモなし）';
+        
+        document.getElementById('gachaResultDesc').innerHTML = `
+            <div style="font-weight: 700; color: var(--text-main); margin-bottom: 4px;">${creatorText}</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">チャンネル: ${chosenRecipe.channelName}</div>
+            <div style="font-style: italic; font-size: 11px; color: var(--text-light); margin-top: 6px; padding-left: 8px; border-left: 2px solid var(--border-color);">${reviewText}</div>
+        `;
         
         const resultImg = document.getElementById('gachaResultImg');
         if (resultImg) {

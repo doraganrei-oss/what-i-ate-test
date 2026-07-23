@@ -520,31 +520,8 @@ button, input, select, textarea {
     transform: scale(1.02);
 }
 
-/* Play button overlay icon */
 .play-btn-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    opacity: 0.85;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    pointer-events: none;
-}
-
-.post-img-container:hover .play-btn-overlay {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 1;
-    background-color: #ffffff;
+    display: none;
 }
 
 .post-body {
@@ -1242,6 +1219,12 @@ button, input, select, textarea {
 @keyframes scaleIn {
     from { transform: scale(0.92); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    90% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .result-badge {
