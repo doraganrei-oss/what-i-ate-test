@@ -72,8 +72,8 @@ function getYouTubeId(url) {
 
 function getYouTubeThumbnail(videoId) {
     if (!videoId) return '';
-    // Use high-quality default thumbnail
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    // Use maximum resolution default thumbnail (16:9 high res)
+    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 }
 
 function isShortsVideo(url) {
@@ -662,7 +662,7 @@ function renderFeed() {
                 </div>
                 
                 <div class="post-img-container" data-id="${recipe.id}">
-                    <img src="${getYouTubeThumbnail(recipe.videoId)}" alt="${recipe.dishName}" class="post-img">
+                    <img src="${getYouTubeThumbnail(recipe.videoId)}" alt="${recipe.dishName}" class="post-img" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${recipe.videoId}/hqdefault.jpg';">
                     <div class="play-btn-overlay">▶</div>
                     ${isShortsVideo(recipe.youtubeUrl) ? `<div class="grid-video-badge">Shorts</div>` : ''}
                 </div>
@@ -712,7 +712,7 @@ function renderFeed() {
             const gridItem = document.createElement('div');
             gridItem.className = 'grid-post-item';
             gridItem.innerHTML = `
-                <img src="${getYouTubeThumbnail(recipe.videoId)}" alt="${recipe.dishName}" class="grid-post-img">
+                <img src="${getYouTubeThumbnail(recipe.videoId)}" alt="${recipe.dishName}" class="grid-post-img" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${recipe.videoId}/hqdefault.jpg';">
                 <div class="grid-post-overlay">
                     <div class="grid-overlay-item">🤤 ${recipe.likesCount || 0}</div>
                 </div>
@@ -1001,7 +1001,7 @@ function renderCalendar() {
                 const thumb = document.createElement('div');
                 thumb.className = 'day-meal-thumbnail';
                 thumb.innerHTML = `
-                    <img src="${getYouTubeThumbnail(recipe.videoId)}" alt="${recipe.dishName}">
+                    <img src="${getYouTubeThumbnail(recipe.videoId)}" alt="${recipe.dishName}" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${recipe.videoId}/hqdefault.jpg';">
                     ${dayMeals.length > 1 ? `<div class="day-meal-count-badge">${dayMeals.length}</div>` : ''}
                 `;
                 dayCell.appendChild(thumb);
@@ -1033,7 +1033,7 @@ function openDaySchedulePopover(dateStr) {
                 const item = document.createElement('div');
                 item.className = 'schedule-popover-item';
                 item.innerHTML = `
-                    <img src="${getYouTubeThumbnail(recipe.videoId)}" class="schedule-popover-img" alt="${recipe.dishName}">
+                    <img src="${getYouTubeThumbnail(recipe.videoId)}" class="schedule-popover-img" alt="${recipe.dishName}" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${recipe.videoId}/hqdefault.jpg';">
                     <div class="schedule-popover-info">
                         <div class="schedule-popover-title">${recipe.dishName}</div>
                         <div class="schedule-popover-channel">${recipe.channelName}</div>
@@ -1135,7 +1135,7 @@ function triggerGachaSpin() {
         // Display capsule ball or final result thumbnail inside Gacha screen
         screen.innerHTML = `
             <div style="width: 100%; height: 100%; border-radius: 12px; overflow: hidden; position: relative;">
-                <img src="${getYouTubeThumbnail(chosenRecipe.videoId)}" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="${getYouTubeThumbnail(chosenRecipe.videoId)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${chosenRecipe.videoId}/hqdefault.jpg';">
                 <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: #ffffff; font-size: 9px; font-weight: 800; padding: 4px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                     ${chosenRecipe.dishName}
                 </div>
@@ -1145,6 +1145,15 @@ function triggerGachaSpin() {
         // Pop result card details
         document.getElementById('gachaResultTitle').innerText = chosenRecipe.dishName;
         document.getElementById('gachaResultDesc').innerText = chosenRecipe.channelName;
+        
+        const resultImg = document.getElementById('gachaResultImg');
+        if (resultImg) {
+            resultImg.src = getYouTubeThumbnail(chosenRecipe.videoId);
+            resultImg.onerror = () => {
+                resultImg.onerror = null;
+                resultImg.src = `https://img.youtube.com/vi/${chosenRecipe.videoId}/hqdefault.jpg`;
+            };
+        }
         
         const resultCard = document.getElementById('gachaResultCard');
         resultCard.style.display = 'block';
